@@ -1,0 +1,115 @@
+@import url(https://unpkg.com/7.css);
+
+/* 1. Global Setup */
+
+
+body {
+    cursor: url('https://cur.cursors-4u.net/games/gam-7/gam647.cur'), auto !important;
+    background-image: linear-gradient(to bottom, #D52D00, orange, pink, #A30262, purple); 
+    background-attachment: fixed;
+    color: #fff;
+    font-family: "W95FA", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 2. Top Header Bar */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+header a { color: #fff; text-decoration: none; margin-left: 10px; }
+
+/* 3. Banner Box */
+.banner-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    margin: 20px 0;
+    padding: 40px;
+    text-align: center;
+}
+
+.banner-title { font-size: 32px; font-weight: bold; letter-spacing: 2px; }
+.banner-sub { font-size: 14px; opacity: 0.8; margin-top: 10px; }
+
+/* 4. Navigation */
+.banner-nav-wrap {
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+}
+
+.main-nav a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+.main-nav a:hover { background: #d0a0a3; }
+
+/* 5. Main Content Grid */
+.main-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+
+/* 6. Sidebar & Tabs */
+.title-tab {
+    background: #000;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 2;
+}
+
+.sidebar-box, .content-text {
+    padding: 15px;
+    color: #000;
+}
+
+.line-sep {
+    height: 1px;
+    background: #ccc;
+    margin: 10px 0;
+}
+
+.window-body { background: #fff !important; }
+
+/* 7. Rainbow Text */
+.rainbow-text {
+  background-image: linear-gradient(to left, #d62e02, #fd9855, #d161a2, #a20160);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+}

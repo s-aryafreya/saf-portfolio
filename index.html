@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>saturnianmoons</title>
+    <link rel="icon" type="image/x-icon" href="img/jicon.gif">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!--main body-->
+    <div id="container">
+        <header>
+            <div class="logo">🪐 saturnianmoons</div>
+            <!--time/weather tracker-->
+            <div class="header-status">
+                <span id="current-time">00:00:00 AM</span> | 
+                <span id="weather-icon"></span> <span id="current-weather">Loading...</span>
+            </div>
+            <!--kofi link-->
+            <div class="social" style="font-size: 13px;">
+                <a href="https://ko-fi.com/tulipsonsaturn">Ko-Fi.</a>
+            </div>
+        </header>
+        <!--banner box-->
+        <div class="banner-box">
+            <div class="banner-inner">
+                <div class="banner-title">salem arya freya</div>
+                <div class="banner-sub">web design · interactive media · game dev</div>
+            </div>
+        </div>
+        <!--website nav bar-->
+        <div class="banner-nav-wrap">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="about.html">about</a></li>
+                    <li><a href="websites.html">websites</a></li>
+                    <li><a href="apps.html">applications</a></li>
+                    <li><a href="projects.html">projects</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="layout-grid">
+            <!--LEFT COLUMN-->
+            <aside class="sidebar-col">
+                <!--about window-->
+                <section class="window active" style="--w7-w-bg: #d0a0a3;">
+                    <div class="title-bar">
+                        <div class="title-bar-text">c:/users/salem/about</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="window-body" style="text-align: center; padding: 15px;">
+                         <b>Salem</b> <i>she/her</i>
+                            <br>
+                        BA in Digital Media: Web and Interactive Media Senior @ UCF ⚔️
+                            <br>
+                        <div class="line-sep"></div>
+                        Lead Sport Club Supervisor @ UCF ⚔️ 
+                        <div class="line-sep"></div>
+                        <div class="inner-text">
+                            <p class="rainbow-text"><b>👤 status:</b> stressing in senior year</p>
+                        </div>
+                    </div>
+                </section>
+                <!--link/contact window-->
+                <div class="window active" style="--w7-w-bg: #d0a0a3;">
+                    <div class="title-bar">
+                        <div class="title-bar-text">c:/users/salem/links</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="window-body" style="text-align: center;">
+                        <h3 style="font-family: inherit;">Social Links</h3>
+                            <ul class="social-grid">
+                                <li><a href="https://www.linkedin.com/in/saryafreya/">LinkedIn</a></li>
+                                <li><a href="https://github.com/s-aryafreya">GitHub</a></li>
+                                <li><a href="https://saturnianmoons.itch.io/">itch.io</a></li>
+                                <li><a href="https://www.youtube.com/@tulipsonsaturn">YouTube</a></li>
+                                <li><a href="https://ko-fi.com/tulipsonsaturn">Ko-Fi</a></li>
+                            </ul>
+                        <!--contact form-->
+                        <h3 style="font-family: inherit;">Contact Me</h3>
+                            <form class="contact-form" action="https://formspree.io/f/YOUR_ID" method="POST">
+                                <div class="field-row-stacked">
+                                    <label for="name">Name</label>
+                                    <input id="name" name="name" type="text" placeholder="your name..." required>
+                                </div>
+                                <div class="field-row-stacked">
+                                    <label for="email">Email</label>
+                                    <input id="email" name="_replyto" type="email" placeholder="your@email.com" required>
+                                </div>
+                                <div class="field-row-stacked">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" rows="4" placeholder="type here..." required></textarea>
+                                </div>
+                                <div class="field-row" style="justify-content: flex-end; margin-top: 10px;">
+                                    <button type="submit">Send</button>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+                <!--buttons window-->
+                <div class="window active" style="--w7-w-bg: #d0a0a3;">
+                    <div class="title-bar">
+                        <div class="title-bar-text">c:/users/salem/buttons</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="window-body" style="text-align: center; padding: 10px;">
+                        <a href="https://saturnianmoons.nekoweb.org"><img src="img/smbutton.png" style="margin-bottom: 8px;"></a><br>
+                        <a href="https://nekoweb.org/"><img src="https://nekoweb.org/assets/buttons/button5.gif"></a> 
+                    </div>
+                </div>
+            </aside>
+
+            <!--RIGHT COLUMN-->
+            <!--welcome window-->
+            <main class="content-col">
+                <div class="window active" style="--w7-w-bg: #d0a0a3; width: 100%;">
+                    <div class="title-bar">
+                        <div class="title-bar-text">c:\users\salem\documents\welcome.txt</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    
+                    <div class="window-body has-space">
+                        <div class="inner-text" style="padding: 15px;">
+                            <h2 style="margin-top: 0; font-family: inherit;">welcome to my portfolio!</h2>
+                            <p><b>University of Central Florida:</b></p>
+                            <p>i'm currently a <b>senior</b> at UCF studying a bachelors in <b>Digital Media: Web & Interactive Media</b>. here you will be able to find all my works.</p>                            
+                            <hr> 
+                            <!--under construction box-->
+                            <div class="notice-box">
+                                ⚠️ This portfolio is currently under construction. ⚠️
+                            </div>
+                        </div>
+                        <!--kofi widget button-->
+                        <div style="padding: 15px; border-top: 1px solid rgba(163, 2, 98, 0.2); text-align: center;">
+                            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+                            <script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#d161a2', 'Q5Q81SN1A9');kofiwidget2.draw();</script>
+                        </div>
+                    </div>
+                </div>
+                <!--log updates window-->
+                <div class="window active" style="--w7-w-bg: #d0a0a3; width: 100%; margin-top: 20px;">
+                    <div class="title-bar">
+                        <div class="title-bar-text">a:\logs\updates.exe</div>
+                        <div class="title-bar-controls">
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="window-body">
+                        <div class="blog-scroll-area" id="blog-container">
+                            <!--blog entries section-->
+                            
+                            <!--update 3-->
+                            <div class="blog-entry">
+                                <div class="blog-meta">
+                                    <span class="blog-date">2026-03-24</span>
+                                    <span class="blog-tag">#pushed</span>
+                                </div>
+                                <p>pushed my most recent build update to my site v0.7.8, im so proud of her and how shes coming along 🤲🏼</p>
+                            </div>
+                            
+                            <div class="line-sep" style="width: 100%; opacity: 0.5; margin: 10px 0;"></div>
+                            <!--update 2-->
+                            <div class="blog-entry">
+                                <div class="blog-meta">
+                                    <span class="blog-date">2026-01-11</span>
+                                    <span class="blog-tag">#building</span>
+                                </div>
+                                <p>updated my portfolio site to its basic structure v0.1.5 not a huge fan but still building 🔨</p>
+                            </div>
+                            
+                            <div class="line-sep" style="width: 100%; opacity: 0.5; margin: 10px 0;"></div>
+                            <!--update 1-->
+                            <div class="blog-entry">
+                                <div class="blog-meta">
+                                    <span class="blog-date">2026-01-10</span>
+                                    <span class="blog-tag">#newportfolio</span>
+                                </div>
+                                <p>created the very first neko web site v0.1.0, going to gradually update when i have the time between classes 😅</p>
+                            </div>
+
+                        </div>
+                        <!--status bar-->
+                        <div class="status-bar" style="margin: 0; border-top: 1px solid #f8bbd0;">
+                            <p class="status-bar-field" id="post-count">loading posts...</p>
+                            <p class="status-bar-field">system: active</p>
+                            <p class="status-bar-field">saturnianmoons</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!--site footer-->
+        <footer class="site-footer">
+            <div class="version-info">
+                <span>build: v0.7.8</span>
+                <span class="separator">|</span>
+                <span>last_updated: 2026-03-24</span>
+            </div>
+            <div class="copyright">
+                &copy; 2026 saturnianmoons. all rights reserved.
+            </div>
+        </footer>
+    </div>
+    <!--javascript connection-->
+    <script src="script.js"></script>
+</body>
+</html>

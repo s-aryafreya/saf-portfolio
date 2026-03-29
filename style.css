@@ -1,0 +1,332 @@
+/* 1. Global Setup */
+@import url(https://unpkg.com/7.css);
+@font-face {
+    font-family: "Valmeria3DExtrude-OG7yo";
+    src: url(Valmeria3DExtrude-OG7yo.otf);
+}
+
+* {
+    font-family: "W95FA", Tahoma, sans-serif !important;
+}
+
+body {
+    cursor: url('https://cur.cursors-4u.net/games/gam-7/gam647.cur'), auto !important;
+    background-color: #fce4ec; 
+    background-image: url('img/smoon_bg.png');
+    background-repeat: repeat; 
+    background-attachment: fixed;
+    color: #ffffff;
+    margin: 0;
+    padding: 40px 10px; /* Extra space for curved container */
+}
+
+.title-bar-text, 
+.window-body, 
+button, 
+input, 
+textarea, 
+select {
+    font-family: "W95FA", Tahoma, sans-serif !important;
+}
+
+a {
+    color: #A30262;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #D52D00;
+    text-decoration: underline;
+}
+
+.rainbow-text {
+  background-image: linear-gradient(to left, #d62e02, #fd9855, #d161a2, #a20160);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* 2. Layout Container */
+#container {
+    max-width: 777px; 
+    margin: 0 auto;
+    padding: 25px;
+    /* Curved edges and semi-transparent monotone pink */
+    background: rgba(255, 230, 235, 0.85); 
+    border-radius: 7px; 
+    border: 2px solid #f8bbd0;
+    backdrop-filter: blur(5px); /* Softens the fabric background behind the container */
+    box-shadow: 0 10px 30px rgba(163, 2, 98, 0.1);
+}
+
+/* 3. Header, Banner, Nav */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertical alignment */
+    flex-wrap: wrap;
+    padding: 10px 0;
+    font-size: 11px; /* Slightly smaller for the tech feel */
+    border-bottom: 1px solid rgba(163, 2, 98, 0.2);
+    margin-bottom: 15px;
+}
+
+.header-status {
+    color: #A30262;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Spaces out time, |, icon, and text */
+    font-variant-numeric: tabular-nums;
+}
+
+.blink {
+    animation: blink-animation 1s steps(2, start) infinite;
+    padding: 0 1px;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+#weather-icon {
+    font-size: 14px; /* Makes the emoji pop a bit more */
+}
+
+/* Mobile fix for the new header item */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+header a {
+    color: #A30262;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.logo {
+    color: #A30262;
+    font-size: 13px;
+}
+
+.banner-box {
+    background: #d0a0a3; /* Monotone pink match */
+    border: 1px solid rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+    padding: 40px 15px;
+    text-align: center;
+    border-radius: 7px;
+}
+
+.banner-title {
+    font-size: 42px;
+    letter-spacing: 3px;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.banner-sub {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-top: 10px;
+    color: #fff;
+}
+
+.banner-nav-wrap {
+    background: #fff;
+    margin-bottom: 25px;
+    border: 1px solid #f8bbd0;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.main-nav a {
+    color: #A30262;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-weight: bold;
+    text-transform: lowercase;
+    font-size: 13px;
+}
+.main-nav a:hover { background: #fce4ec; }
+
+/* 4. Grid Setup */
+#layout-grid {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.sidebar-col {
+    width: 240px; 
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.content-col {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* 5. Lists & Grid */
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+/* 6. Window Styling - Monotone Pink Theme */
+.window {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.window-body {
+    background: #fffcfd !important; /* Extremely soft pink-white tint */
+    color: #d161a2; /* Deep purple-pink text for readability */
+}
+
+.line-sep {
+    height: 1px;
+    background: #f8bbd0;
+    margin: 15px auto;
+    width: 80%;
+}
+
+.notice-box {
+    background: #f8bbd0;
+    border: 1px dashed #d161a2;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    color: #D52D00;
+    border-radius: 5px;
+}
+
+/* Contact Form Styling */
+.contact-form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form label {
+    color: #A30262;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    border: 1px solid #f8bbd0;
+    background: #fff;
+    padding: 5px;
+    color: #4a148c;
+    box-sizing: border-box;
+}
+
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    outline: 2px solid #d161a2;
+    background: #fce4ec;
+}
+
+.contact-form button {
+    cursor: pointer;
+    min-width: 60px;
+}
+
+/* Blog Scroll Area */
+.blog-scroll-area {
+    max-height: 200px; /* Limits height for the scroll effect */
+    overflow-y: scroll;
+    padding: 15px;
+    background: #fffcfd;
+}
+
+.blog-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #A30262;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.blog-entry p {
+    margin: 0;
+    font-size: 12px;
+    color: #4a148c;
+}
+
+/* Custom Pink Scrollbar */
+.blog-scroll-area::-webkit-scrollbar {
+    width: 16px;
+}
+.blog-scroll-area::-webkit-scrollbar-track {
+    background: #fce4ec;
+    border-left: 1px solid #f8bbd0;
+}
+.blog-scroll-area::-webkit-scrollbar-thumb {
+    background: #d0a0a3;
+    border: 3px solid #fce4ec;
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #888; /* 3D effect */
+}
+
+.site-footer {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px double #f8bbd0;
+    text-align: center;
+    font-size: 10px;
+    color: #A30262;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.version-info {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.separator {
+    margin: 0 8px;
+    opacity: 0.5;
+}
+
+.copyright {
+    opacity: 0.7;
+}
+
+/* 7. Mobile Fix */
+@media (max-width: 768px) {
+    #container { padding: 15px; border-radius: 15px; margin: 0 5px; }
+    #layout-grid { flex-direction: column; }
+    .sidebar-col { width: 100%; order: 2; }
+    .content-col { width: 100%; order: 1; }
+    .banner-title { font-size: 22px; }
+    header { justify-content: center; text-align: center; gap: 10px; }
+    .main-nav a { padding: 8px 10px; font-size: 12px; }
+}
