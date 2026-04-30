@@ -1,0 +1,132 @@
+@font-face {
+    font-family: "W95FA";
+    src: url("../fonts/W95FA.otf");
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: url(../images/inbg.webp) no-repeat center center fixed;
+    background-size: cover;
+    background-color: #0d0d0d; /* Fallback */
+    font-family: "W95FA", Tahoma, sans-serif;
+    color: #e0c3c3; /* Modernized rosybrown */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* The Main Window */
+#container {
+    width: 90%;
+    max-width: 800px;
+    background: rgba(15, 10, 20, 0.9);
+    border: 2px solid #5038BB;
+    box-shadow: 0 0 20px rgba(80, 56, 187, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Title Bar */
+header {
+    background: linear-gradient(90deg, #5038BB, #2a1b6b);
+    padding: 10px 15px;
+    border-bottom: 2px solid #5038BB;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+    text-transform: uppercase;
+}
+
+/* Nav Bar - Inline */
+nav {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-bottom: 1px solid rgba(80, 56, 187, 0.3);
+    text-align: center;
+}
+
+nav a {
+    color: #9DF3F8;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+nav a:hover { color: #fff; text-shadow: 0 0 5px #9DF3F8; }
+
+/* Content Area */
+.main-content {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
+
+section {
+    flex: 2;
+    line-height: 1.6;
+}
+
+aside {
+    flex: 1;
+    background: rgba(80, 56, 187, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: 1px solid rgba(80, 56, 187, 0.3);
+}
+
+/* Choice Buttons */
+.choices {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.choice-btn {
+    display: block;
+    padding: 12px;
+    background: rgba(24, 58, 6, 0.3);
+    border: 1px solid #183A06;
+    color: #F6FDD6;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.choice-btn:hover {
+    background: #183A06;
+    box-shadow: 0 0 10px #F6FDD6;
+}
+
+footer {
+    padding: 10px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.volume-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 11px;
+    color: #9DF3F8;
+    padding: 5px;
+}
+
+/* Retro styling for the slider */
+#volume-slider {
+    cursor: pointer;
+    accent-color: #5038BB; /* Matches your header color */
+    width: 100px;
+}

@@ -152,7 +152,7 @@ header a {
     margin-bottom: 25px;
     border: 1px solid #f8bbd0;
     border-radius: 7px;
-    overflow: hidden;
+    overflow: visible; /* ✅ lets the dropdown escape */
 }
 .main-nav ul {
     display: flex;
@@ -172,6 +172,49 @@ header a {
     font-size: 13px;
 }
 .main-nav a:hover { background: #fce4ec; }
+
+/* Dropdown Menu */
+.has-dropdown {
+    position: relative;
+}
+
+.has-dropdown .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #f8bbd0;
+    border-top: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 150px;
+    z-index: 999;
+    border-radius: 0 0 7px 7px;
+    box-shadow: 0 4px 10px rgba(163, 2, 98, 0.1);
+}
+
+.has-dropdown .dropdown li a {
+    padding: 8px 15px;
+    display: block;
+    font-size: 12px;
+    color: #A30262;
+    border-bottom: 1px solid #fce4ec;
+}
+
+.has-dropdown .dropdown li:last-child a {
+    border-bottom: none;
+}
+
+.has-dropdown .dropdown li a:hover {
+    background: #fce4ec;
+}
+
+/* Show on hover */
+.has-dropdown:hover .dropdown {
+    display: block;
+}
 
 /* 4. Grid Setup */
 #layout-grid {
