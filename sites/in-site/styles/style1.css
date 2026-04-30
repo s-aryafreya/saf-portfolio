@@ -32,9 +32,45 @@ body {
 
 /* Title Bar */
 header {
-    background: linear-gradient(90deg, #5038BB, #2a1b6b);
-    padding: 10px 15px;
-    border-bottom: 2px solid #5038BB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 8px;
+    background-color: #5038BB; /* Matches your header bar */
+}
+
+.portfolio-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace; /* Keeping the retro vibe */
+    font-size: 10px;
+    font-weight: bold;
+    color: #000;
+    background-color: #d0a0a3; /* Classic grey button */
+    padding: 2px 6px;
+    border: 2px solid;
+    /* This creates the 3D "raised" look */
+    border-color: #ffffff #808080 #808080 #ffffff;
+    height: fit-content;
+    transition: all 0.1s;
+}
+
+.portfolio-btn span {
+    font-size: 14px; /* Makes the arrow a bit more prominent */
+    line-height: 1;
+}
+
+.portfolio-btn:hover {
+    background-color: #d1d1d1;
+    filter: brightness(1.1);
+}
+
+.portfolio-btn:active {
+    /* This creates the "pressed" look */
+    border-color: #808080 #ffffff #ffffff #808080;
+    padding: 3px 5px 1px 7px; 
 }
 
 header h1 {
