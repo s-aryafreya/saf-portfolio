@@ -14,7 +14,7 @@ function startClock() {
     }, 1000);
 }
 
-// --- 3. BLOG POST COUNTER ---
+// --- 2. BLOG POST COUNTER ---
 function updatePostCount() {
     // We target the blog entries
     const posts = document.querySelectorAll('.blog-entry');
@@ -29,6 +29,5 @@ function updatePostCount() {
 // Ensure the functions run AFTER the page has fully loaded
 window.addEventListener('load', () => {
     startClock();
-    fetchWeather();
     updatePostCount();
 });
