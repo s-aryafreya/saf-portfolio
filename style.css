@@ -2,10 +2,12 @@
 @import url(https://unpkg.com/7.css);
 @font-face {
     font-family: "Valmeria3DExtrude-OG7yo";
-    font-family: "W95FA";
     src: url(fonts/Valmeria3DExtrude-OG7yo.otf);
-    src: url(fonts/W95FA.otf);
+}
 
+@font-face {
+    font-family: "W95FA";
+    src: url(fonts/W95FA.otf);
 }
 
 * {
@@ -66,12 +68,18 @@ a:hover {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Vertical alignment */
+    align-items: center;
     flex-wrap: wrap;
     padding: 10px 0;
-    font-size: 11px; /* Slightly smaller for the tech feel */
+    font-size: 11px;
     border-bottom: 1px solid rgba(163, 2, 98, 0.2);
     margin-bottom: 15px;
+}
+
+.logo {
+    color: #A30262;
+    font-size: 13px;
+    flex: 1; /* ← add this */
 }
 
 .header-status {
@@ -81,8 +89,15 @@ header {
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    gap: 5px; /* Spaces out time, |, icon, and text */
+    justify-content: center; /* ← add this */
+    gap: 5px;
     font-variant-numeric: tabular-nums;
+    flex: 1; /* ← add this */
+}
+
+.social {
+    flex: 1; /* ← add this */
+    text-align: right; /* ← add this */
 }
 
 .blink {
@@ -96,10 +111,6 @@ header {
     }
 }
 
-#weather-icon {
-    font-size: 14px; /* Makes the emoji pop a bit more */
-}
-
 /* Mobile fix for the new header item */
 @media (max-width: 768px) {
     header {
@@ -111,11 +122,6 @@ header a {
     color: #A30262;
     text-decoration: none;
     margin-left: 10px;
-}
-
-.logo {
-    color: #A30262;
-    font-size: 13px;
 }
 
 .banner-box {
