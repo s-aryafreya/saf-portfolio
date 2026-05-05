@@ -263,14 +263,18 @@ header a {
     width: 80%;
 }
 
-.notice-box {
-    background: #f8bbd0;
-    border: 1px dashed #d161a2;
-    padding: 10px;
-    margin-top: 20px;
-    text-align: center;
-    color: #D52D00;
-    border-radius: 5px;
+/* Project Gallery*/
+div.scroll-container {
+  background-color: #d161a2;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 2px;
+  max-height: 200px;
+}
+
+div.scroll-container img {
+  padding: 2px;
+  max-height: 150px;
 }
 
 /* Contact Form Styling */
