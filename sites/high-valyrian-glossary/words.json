@@ -1,7 +1,276 @@
 [
     {
+        "word": "ābra",
+        "definition": "a woman, the woman, woman",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "ābrā",
+        "definition": "and the woman, and woman, and a woman",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "ābri",
+        "definition": "the women, women",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "ābrī",
+        "definition": "and the women, and women",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
         "word": "azantys",
         "definition": "knight, a knight, the knight",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "azantyssy",
+        "definition": "the knights, knights, swordsmen, the swordsmen",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "ēdrus",
+        "definition": "to sleep, she does sleep, he does sleep, it does sleep, sleeping",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "ēdrusi",
+        "definition": "they are asleep, they are sleeping, are sleeping",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "hontes",
+        "definition": "a bird, bird",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "hontesse",
+        "definition": "the birds, birds",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "iksā",
+        "definition": "you are, you're",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "iksan",
+        "definition": "am, i am",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "iksāt",
+        "definition": "you are, you all are, you are all, are",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "iksi",
+        "definition": "we are, are",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "issa",
+        "definition": "is, she is, he is, it is so",
+        "pos": [
+            "verb",
+            "adjective"
+        ]
+    },
+    {
+        "word": "issi",
+        "definition": "they are",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "kepa",
+        "definition": "a father, the father, father",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "kepi",
+        "definition": "fathers, the fathers, the dads",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "kirine",
+        "definition": "to be happy, happy",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "krini",
+        "definition": "happy, glad, pleased (often plural)",
+        "pos": [
+            "adjective"
+        ]
+    },
+    {
+        "word": "līris",
+        "definition": "it smiles, she smiles, he smiles, one smiles",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "līrisi",
+        "definition": "are smiling, they are smiling, they smile",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "muña",
+        "definition": "a mother, the mother, mother",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "muñi",
+        "definition": "mothers, moms, the mothers",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "nages",
+        "definition": "is sweating, sweating, she is sweating, he is sweating",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "nagesi",
+        "definition": "are sweating, they are sweating, they sweat",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "ñuha",
+        "definition": "my, mine",
+        "pos": [
+            "possessive-adjective",
+            "possessive-pronoun"
+        ]
+    },
+    {
+        "word": "riña",
+        "definition": "a girl, the girl, girl",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "riñi",
+        "definition": "the girls, girls",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "sȳri",
+        "definition": "good (referring to plural)",
+        "pos": [
+            "adjective"
+        ]
+    },
+    {
+        "word": "sȳz",
+        "definition": "is good, good",
+        "pos": [
+            "verb",
+            "adjective"
+        ]
+    },
+    {
+        "word": "taoba",
+        "definition": "a boy, the boy, boy",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "taobā",
+        "definition": "and the boy, and a boy",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "taobi",
+        "definition": "the boys, boys",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "vāedas",
+        "definition": "is singing, sings, she is singing, he is singing",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "vāedis",
+        "definition": "they sing, they are singing, are singing",
+        "pos": [
+            "verb"
+        ]
+    },
+    {
+        "word": "vala",
+        "definition": "a man, the man, man",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "valā",
+        "definition": "and the man, and a man",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
+        "word": "vali",
+        "definition": "the men, men",
         "pos": [
             "noun"
         ]
