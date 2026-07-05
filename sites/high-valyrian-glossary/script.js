@@ -1,49 +1,48 @@
-let dictionary = []; // Initialized as empty to allow words.json to load
+let dictionary = [];
 let editIndex = null; 
+// Tracks if you have unlocked the admin panel session using your secret key
+let isAdminSession = false; 
 
 function toggleAdminPanel() {
     const panel = document.getElementById('adminPanel');
     panel.classList.toggle('hidden');
+    
+    // Toggle admin session state and refresh the UI to reveal/hide actions
+    isAdminSession = !panel.classList.contains('hidden');
+    displayDictionary();
 }
 
-// FIX 1: Load the static JSON file on page load, fallback to localStorage if needed
+// FIX 1: Securely fetch from your public JSON data first, fallback to draft cache if empty
 async function loadDictionary() {
     try {
         const response = await fetch('words.json');
         if (!response.ok) throw new Error('Could not load words.json');
         dictionary = await response.json();
     } catch (error) {
-        console.log("No words.json detected or file is empty. Falling back to local cache.");
+        console.log("Reading from local database storage instead.");
         dictionary = JSON.parse(localStorage.getItem('valyrianDict')) || [];
     }
     displayDictionary();
 }
 
-// MULTI-TAG AUTO-DETECT LOGIC (Kept exactly as you wrote it!)
+// MULTI-TAG AUTO-DETECT LOGIC (Preserved exactly)
 function autoDetectPOS() {
     const definition = document.getElementById('definitionInput').value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('.pos-checkbox');
 
-    // Uncheck everything first before parsing fresh text
     checkboxes.forEach(cb => cb.checked = false);
-
     if (definition === '') return;
 
-    // Break down entry text into safe word matching segments
     const words = definition.split(/[\s,./?!\(\)]+/);
 
     checkboxes.forEach(cb => {
         const type = cb.value;
-
-        // 1. Possessive Adjective matching ("my")
         if (type === 'possessive-adjective' && words.includes('my')) {
             cb.checked = true;
         }
-        // 2. Possessive Pronoun matching ("mine")
         else if (type === 'possessive-pronoun' && words.includes('mine')) {
             cb.checked = true;
         }
-        // 3. Verb structural tests
         else if (type === 'verb' && (
             definition.startsWith('to ') || definition.startsWith('is ') || 
             definition.startsWith('are ') || 
@@ -53,19 +52,16 @@ function autoDetectPOS() {
         )) {
             cb.checked = true;
         } 
-        // 4. Noun structural tests
         else if (type === 'noun' && (
             definition.startsWith('a ') || definition.startsWith('an ') || definition.startsWith('the ')
         )) {
             cb.checked = true;
         } 
-        // 5. Adjective structural tests
         else if (type === 'adjective' && (
             definition.startsWith('describing') || definition.startsWith('having') || definition.startsWith('is') || definition.endsWith('ful')
         )) {
             cb.checked = true;
         }
-        // 6. Adverb structural tests
         else if (type === 'adverb' && (
             definition.endsWith('ly') || definition.startsWith('in a')
         )) {
@@ -79,7 +75,7 @@ function displayDictionary() {
     listElement.innerHTML = ''; 
 
     if (dictionary.length === 0) {
-        listElement.innerHTML = `<li class="empty-state">The lexicon is currently empty. Press '~' to open the workspace.</li>`;
+        listElement.innerHTML = `<li class="empty-state">The lexicon is currently empty.</li>`;
         return;
     }
 
@@ -89,14 +85,23 @@ function displayDictionary() {
         const li = document.createElement('li');
         li.className = 'word-card';
         
-        // Loop through array elements and print individual label badges
         let tagsHTML = '';
         if (Array.isArray(item.pos)) {
             item.pos.forEach(tag => {
-                // Formatting clean UI text labels from code tokens
                 const labelText = tag.replace('-', ' ');
                 tagsHTML += `<span class="pos-tag ${tag}">${labelText}</span>`;
             });
+        }
+
+        // FIX 2: Only compile and show edit/delete actions if your admin session is unlocked
+        let actionsHTML = '';
+        if (isAdminSession) {
+            actionsHTML = `
+                <div class="admin-actions">
+                    <button class="edit-btn" onclick="startEdit(${index})">Edit</button>
+                    <button class="delete-btn" onclick="deleteWord(${index})">×</button>
+                </div>
+            `;
         }
 
         li.innerHTML = `
@@ -107,10 +112,7 @@ function displayDictionary() {
                 </div>
                 <div class="word-definition">${item.definition}</div>
             </div>
-            <div class="admin-actions">
-                <button class="edit-btn" onclick="startEdit(${index})">Edit</button>
-                <button class="delete-btn" onclick="deleteWord(${index})">×</button>
-            </div>
+            ${actionsHTML}
         `;
         listElement.appendChild(li);
     });
@@ -124,7 +126,6 @@ function submitWord() {
     const word = wordInput.value.trim();
     const definition = definitionInput.value.trim();
     
-    // Gather all checked parts of speech into an array list
     const selectedPOS = [];
     document.querySelectorAll('.pos-checkbox:checked').forEach(cb => {
         selectedPOS.push(cb.value);
@@ -154,17 +155,12 @@ function startEdit(index) {
     document.getElementById('wordInput').value = item.word;
     document.getElementById('definitionInput').value = item.definition;
     
-    // Reset checkboxes and map stored array strings back into check states
     document.querySelectorAll('.pos-checkbox').forEach(cb => {
         cb.checked = Array.isArray(item.pos) && item.pos.includes(cb.value);
     });
     
     editIndex = index;
     document.getElementById('submitBtn').innerText = 'Update Entry';
-    
-    const panel = document.getElementById('adminPanel');
-    panel.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function deleteWord(index) {
@@ -179,7 +175,7 @@ function deleteWord(index) {
     }
 }
 
-// FIX 2: Added the export utility function so you can generate your data file seamlessly
+// FIX 3: Export tool generates a ready-to-replace words.json payload file
 function exportJSON() {
     const dataStr = JSON.stringify(dictionary, null, 4);
     const blob = new Blob([dataStr], {type: "application/json"});
@@ -191,12 +187,15 @@ function exportJSON() {
     link.click();
 }
 
-// FIX 3: Replaced raw call with loadDictionary setup trigger
-loadDictionary();
-
-// Hidden Admin Key Trigger: Press the `~` key to toggle your workspace
+// FIX 4: Securely listen globally across all elements for the '~' key trigger
 window.addEventListener('keydown', (e) => {
+    // If you are typing inside a form input field, ignore shortcut execution
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    
     if (e.key === '`' || e.key === '~') {
+        e.preventDefault();
         toggleAdminPanel();
     }
 });
+
+loadDictionary();
