@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Valyrian Dictionary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>High Valyrian Lexicon</h1>
+        <button id="adminToggleBtn" class="minimal-btn" onclick="toggleAdminPanel()">🔧 Contributor Portal</button>
+    </header>
+
+    <div id="adminPanel" class="input-section hidden">
+        <h3 id="panelTitle">Add / Edit Entry</h3>
+        <input type="text" id="wordInput" placeholder="High Valyrian word (e.g., Ñuha)">
+        
+        <textarea id="definitionInput" oninput="autoDetectPOS()" placeholder="English translation (e.g., my, mine, sweating...)" rows="3"></textarea>
+        
+        <label style="font-size: 13px; color: #94a3b8; margin-bottom: -5px;">Parts of Speech (Auto-detected):</label>
+        
+        <div class="checkbox-grid">
+            <label><input type="checkbox" value="noun" class="pos-checkbox"> Noun</label>
+            <label><input type="checkbox" value="verb" class="pos-checkbox"> Verb</label>
+            <label><input type="checkbox" value="adjective" class="pos-checkbox"> Adjective</label>
+            <label><input type="checkbox" value="adverb" class="pos-checkbox"> Adverb</label>
+            <label><input type="checkbox" value="possessive-adjective" class="pos-checkbox"> Possessive Adjective</label>
+            <label><input type="checkbox" value="possessive-pronoun" class="pos-checkbox"> Possessive Pronoun</label>
+        </div>
+
+        <button id="submitBtn" class="submit-btn" onclick="submitWord()">Commit to Lexicon</button>
+    </div>
+
+    <main>
+        <ul id="dictionaryList" class="dictionary-list"></ul>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
