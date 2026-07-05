@@ -1,4 +1,4 @@
-let dictionary = JSON.parse(localStorage.getItem('valyrianDict')) || [];
+let dictionary = []; // Initialized as empty to allow words.json to load
 let editIndex = null; 
 
 function toggleAdminPanel() {
@@ -6,7 +6,20 @@ function toggleAdminPanel() {
     panel.classList.toggle('hidden');
 }
 
-// MULTI-TAG AUTO-DETECT LOGIC
+// FIX 1: Load the static JSON file on page load, fallback to localStorage if needed
+async function loadDictionary() {
+    try {
+        const response = await fetch('words.json');
+        if (!response.ok) throw new Error('Could not load words.json');
+        dictionary = await response.json();
+    } catch (error) {
+        console.log("No words.json detected or file is empty. Falling back to local cache.");
+        dictionary = JSON.parse(localStorage.getItem('valyrianDict')) || [];
+    }
+    displayDictionary();
+}
+
+// MULTI-TAG AUTO-DETECT LOGIC (Kept exactly as you wrote it!)
 function autoDetectPOS() {
     const definition = document.getElementById('definitionInput').value.trim().toLowerCase();
     const checkboxes = document.querySelectorAll('.pos-checkbox');
@@ -66,7 +79,7 @@ function displayDictionary() {
     listElement.innerHTML = ''; 
 
     if (dictionary.length === 0) {
-        listElement.innerHTML = `<li class="empty-state">The lexicon is currently empty. Open the contributor portal to populate entries.</li>`;
+        listElement.innerHTML = `<li class="empty-state">The lexicon is currently empty. Press '~' to open the workspace.</li>`;
         return;
     }
 
@@ -166,4 +179,24 @@ function deleteWord(index) {
     }
 }
 
-displayDictionary();
+// FIX 2: Added the export utility function so you can generate your data file seamlessly
+function exportJSON() {
+    const dataStr = JSON.stringify(dictionary, null, 4);
+    const blob = new Blob([dataStr], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = "words.json";
+    link.click();
+}
+
+// FIX 3: Replaced raw call with loadDictionary setup trigger
+loadDictionary();
+
+// Hidden Admin Key Trigger: Press the `~` key to toggle your workspace
+window.addEventListener('keydown', (e) => {
+    if (e.key === '`' || e.key === '~') {
+        toggleAdminPanel();
+    }
+});

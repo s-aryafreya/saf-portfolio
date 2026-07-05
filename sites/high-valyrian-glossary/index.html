@@ -10,7 +10,6 @@
 
     <header>
         <h1>High Valyrian Lexicon</h1>
-        <button id="adminToggleBtn" class="minimal-btn" onclick="toggleAdminPanel()">🔧 Contributor Portal</button>
     </header>
 
     <div id="adminPanel" class="input-section hidden">
@@ -31,6 +30,7 @@
         </div>
 
         <button id="submitBtn" class="submit-btn" onclick="submitWord()">Commit to Lexicon</button>
+        <button class="minimal-btn" style="margin-top: 5px;" onclick="exportJSON()">📥 Export words.json File</button>
     </div>
 
     <main>
