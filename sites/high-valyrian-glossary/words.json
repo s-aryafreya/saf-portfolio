@@ -127,6 +127,11 @@
         ]
     },
     {
+        "word": "kepī",
+        "definition": "and fathers, and the fathers, and dads, and the dads (referring to plural)",
+        "pos": []
+    },
+    {
         "word": "kirine",
         "definition": "to be happy, happy",
         "pos": [
@@ -162,6 +167,13 @@
         ]
     },
     {
+        "word": "munī",
+        "definition": "and mothers, and the mothers, and moms, and the moms",
+        "pos": [
+            "noun"
+        ]
+    },
+    {
         "word": "muñi",
         "definition": "mothers, moms, the mothers",
         "pos": [
@@ -188,6 +200,13 @@
         "pos": [
             "possessive-adjective",
             "possessive-pronoun"
+        ]
+    },
+    {
+        "word": "ñuhi",
+        "definition": "my (referring to plural)",
+        "pos": [
+            "possessive-adjective"
         ]
     },
     {
