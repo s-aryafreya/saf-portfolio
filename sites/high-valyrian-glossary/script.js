@@ -2,6 +2,25 @@ let dictionary = [];
 let editIndex = null; 
 let isAdminSession = false; 
 
+// State Engine Router Metrics
+let currentView = {
+    type: 'all', // 'all', 'vocab', or 'sentences'
+    section: null // Specific matching section string targeted
+};
+
+const sectionTitlesMap = {
+    "Unit 1, Section 1": "Unit 1, Section 1 — Forming Basic Sentences",
+    "Unit 1, Section 2": "Unit 1, Section 2 — Use Basic Phrases",
+    "Unit 1, Section 3": "Unit 1, Section 3 — Form Sentences"
+};
+
+const sectionOrder = ["Unit 1, Section 1", "Unit 1, Section 2", "Unit 1, Section 3"];
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+
 function toggleAdminPanel() {
     const panel = document.getElementById('adminPanel');
     panel.classList.toggle('hidden');
@@ -17,6 +36,7 @@ async function loadDictionary() {
     } catch (error) {
         dictionary = JSON.parse(localStorage.getItem('valyrianDict')) || [];
     }
+    buildNavigationMenu();
     displayDictionary();
 }
 
@@ -31,41 +51,79 @@ function autoDetectPOS() {
 
     checkboxes.forEach(cb => {
         const type = cb.value;
-        if (type === 'possessive-adjective' && words.includes('my')) {
-            cb.checked = true;
-        }
-        else if (type === 'possessive-pronoun' && words.includes('mine')) {
-            cb.checked = true;
-        }
+        if (type === 'possessive-adjective' && words.includes('my')) cb.checked = true;
+        else if (type === 'possessive-pronoun' && words.includes('mine')) cb.checked = true;
         else if (type === 'verb' && (
             definition.startsWith('to ') || definition.startsWith('is ') || 
-            definition.startsWith('are ') || 
-            definition.startsWith('am') || 
-            definition.startsWith('is') || 
-            definition.startsWith('are')|| definition.endsWith('are') || definition.endsWith('ing') 
-        )) {
-            cb.checked = true;
-        } 
-        else if (type === 'noun' && (
-            definition.startsWith('a ') || definition.startsWith('an ') || definition.startsWith('the ')
-        )) {
-            cb.checked = true;
-        } 
-        else if (type === 'adjective' && (
-            definition.startsWith('describing') || definition.startsWith('having') || definition.startsWith('is') || definition.endsWith('ful')
-        )) {
-            cb.checked = true;
-        }
-        else if (type === 'adverb' && (
-            definition.endsWith('ly') || definition.startsWith('in a')
-        )) {
-            cb.checked = true;
-        }
+            definition.startsWith('are ') || definition.startsWith('am') || 
+            definition.startsWith('is') || definition.startsWith('are')|| 
+            definition.endsWith('are') || definition.endsWith('ing') 
+        )) cb.checked = true;
+        else if (type === 'noun' && (definition.startsWith('a ') || definition.startsWith('an ') || definition.startsWith('the '))) cb.checked = true;
+        else if (type === 'adjective' && (definition.startsWith('describing') || definition.startsWith('having') || definition.startsWith('is') || definition.endsWith('ful'))) cb.checked = true;
+        else if (type === 'adverb' && (definition.endsWith('ly') || definition.startsWith('in a'))) cb.checked = true;
     });
+}
+
+// Build Navigation Trees dynamically based on known arrays and captured custom items
+function buildNavigationMenu() {
+    const navMenu = document.getElementById('dynamicNavMenu');
+    navMenu.innerHTML = '';
+
+    // Find custom user added sections not indexed explicitly
+    const trackedGroups = new Set(sectionOrder);
+    dictionary.forEach(item => { if(item.sectionGroup) trackedGroups.add(item.sectionGroup); });
+    const fullOrder = Array.from(trackedGroups);
+
+    fullOrder.forEach(section => {
+        const displayLabel = sectionTitlesMap[section] || section;
+
+        const sectionNavBlock = document.createElement('div');
+        sectionNavBlock.className = 'nav-section-block';
+        sectionNavBlock.innerHTML = `
+            <div class="nav-section-title">${displayLabel}</div>
+            <ul class="nav-sublinks">
+                <li><a href="#" onclick="navigateTo('vocab', '${section}')">📇 Vocabulary</a></li>
+                <li><a href="#" onclick="navigateTo('sentences', '${section}')">💬 Basic Sentences</a></li>
+            </ul>
+        `;
+        navMenu.appendChild(sectionNavBlock);
+    });
+}
+
+function navigateTo(type, section = null) {
+    currentView.type = type;
+    currentView.section = section;
+    
+    // Update Title Banner Presentation Contextually
+    const mainTitle = document.getElementById('pageMainTitle');
+    if (type === 'all') {
+        mainTitle.innerText = "High Valyrian Lexicon Dashboard";
+    } else {
+        const shortName = section ? (sectionTitlesMap[section] || section) : "Unit";
+        mainTitle.innerText = type === 'vocab' ? `${shortName} (Vocabulary)` : `${shortName} (Sentences)`;
+    }
+
+    // Dismiss slider view tracking states natively if processing a mobile window breakpoint
+    document.getElementById('sidebar').classList.remove('active');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+
+    displayDictionary();
 }
 
 function displayDictionary() {
     const containerElement = document.getElementById('dictionaryContainer');
+    
+    // --- PERSISTENCE LOGIC: Capture current open/close states before wiping the DOM ---
+    const collapseStates = {};
+    const existingDetails = containerElement.querySelectorAll('.dashboard-section-panel');
+    existingDetails.forEach(details => {
+        const sectionKey = details.getAttribute('data-section');
+        if (sectionKey) {
+            collapseStates[sectionKey] = details.open;
+        }
+    });
+
     containerElement.innerHTML = ''; 
 
     if (dictionary.length === 0) {
@@ -73,74 +131,86 @@ function displayDictionary() {
         return;
     }
 
-    // Grouping structural matrix logic
+    // Organize items into structural arrays
     const groups = {};
     dictionary.forEach((item) => {
         const section = item.sectionGroup || "Unit 1, Section 1";
-        if (!groups[section]) {
-            groups[section] = [];
-        }
+        if (!groups[section]) groups[section] = [];
         groups[section].push(item);
     });
 
-    const sectionOrder = ["Unit 1, Section 1", "Unit 1, Section 2", "Unit 1, Section 3"];
-    Object.keys(groups).forEach(key => {
-        if (!sectionOrder.includes(key)) sectionOrder.push(key);
-    });
+    const trackedGroups = new Set(sectionOrder);
+    Object.keys(groups).forEach(key => trackedGroups.add(key));
+    const fullOrder = Array.from(trackedGroups);
 
-    // --- NEW: Map your raw section keys to descriptive custom display titles ---
-    const sectionTitlesMap = {
-        "Unit 1, Section 1": "Unit 1, Section 1 — Forming Basic Sentences",
-        "Unit 1, Section 2": "Unit 1, Section 2 — Use Basic Phrases",
-        "Unit 1, Section 3": "Unit 1, Section 3 — Form Sentences",
-    };
-
-    sectionOrder.forEach(sectionTitle => {
+    // --- VIEW ROUTER RENDERING ENGINE ---
+    fullOrder.forEach(sectionTitle => {
         if (!groups[sectionTitle] || groups[sectionTitle].length === 0) return;
 
-        // Parent Collapsible Main Section Container
-        const mainDetails = document.createElement('details');
-        mainDetails.className = 'unit-collapse';
-        mainDetails.open = true; 
+        // Route matching filters
+        if (currentView.type !== 'all' && currentView.section !== sectionTitle) return;
 
-        const mainSummary = document.createElement('summary');
-        mainSummary.className = 'unit-header';
-        
-        // Use the mapped title if it exists, otherwise fall back to the raw name
-        mainSummary.innerText = sectionTitlesMap[sectionTitle] || sectionTitle;
-        mainDetails.appendChild(mainSummary);
-
-        // Separate vocabulary components vs sentences dynamically
         const wordsArray = groups[sectionTitle].filter(item => item.pos && item.pos.length > 0);
         const sentencesArray = groups[sectionTitle].filter(item => !item.pos || item.pos.length === 0);
 
-        // Sort subsets alphabetically
         wordsArray.sort((a, b) => a.word.localeCompare(b.word));
         sentencesArray.sort((a, b) => a.word.localeCompare(b.word));
 
-        // SUBSECTION A: Vocabulary Words
-        if (wordsArray.length > 0) {
-            const subSectionDiv = document.createElement('div');
-            subSectionDiv.className = 'subsection-container';
-            subSectionDiv.innerHTML = `<div class="subsection-title">Vocabulary</div>`;
-            
-            const ul = document.createElement('ul');
-            ul.className = 'dictionary-list';
+        let sectionBlock;
 
-            wordsArray.forEach(item => {
-                ul.appendChild(createCardItem(item));
-            });
+        // If on the Main Dashboard view, make the whole panel an interactive collapsible block
+        if (currentView.type === 'all') {
+            sectionBlock = document.createElement('details');
+            sectionBlock.className = 'dashboard-section-panel unit-collapse';
+            sectionBlock.setAttribute('data-section', sectionTitle); // Tag for tracking state
 
-            subSectionDiv.appendChild(ul);
-            mainDetails.appendChild(subSectionDiv);
+            // Check if user previously collapsed this specific group
+            if (collapseStates[sectionTitle] !== undefined) {
+                sectionBlock.open = collapseStates[sectionTitle];
+            } else {
+                sectionBlock.open = true; // Default open
+            }
+
+            // Create interactive summary header
+            const mainSummary = document.createElement('summary');
+            mainSummary.className = 'dashboard-grid-header';
+            mainSummary.style.cursor = 'pointer'; // Visual indicator that it collapses
+            mainSummary.innerText = sectionTitlesMap[sectionTitle] || sectionTitle;
+            sectionBlock.appendChild(mainSummary);
+
+        } else {
+            // If on a dedicated subpage (Vocab/Sentences), display as a standard open block layout
+            sectionBlock = document.createElement('div');
+            sectionBlock.className = 'dashboard-section-panel';
         }
 
-        // SUBSECTION B: Sentences Block
-        if (sentencesArray.length > 0) {
-            const subSectionDiv = document.createElement('div');
-            subSectionDiv.className = 'subsection-container';
-            subSectionDiv.innerHTML = `<div class="subsection-title">Basic Sentences</div>`;
-            
+        // Render Vocabulary Sub-Blocks
+        if ((currentView.type === 'all' || currentView.type === 'vocab') && wordsArray.length > 0) {
+            const vocabWrapper = document.createElement('div');
+            vocabWrapper.className = 'subsection-container';
+            if (currentView.type === 'all') {
+                vocabWrapper.innerHTML = `<div class="subsection-title">Vocabulary</div>`;
+            }
+
+            const colGrid = document.createElement('div');
+            colGrid.className = 'vocabulary-three-column-grid';
+
+            wordsArray.forEach(item => {
+                colGrid.appendChild(createCardItem(item));
+            });
+
+            vocabWrapper.appendChild(colGrid);
+            sectionBlock.appendChild(vocabWrapper);
+        }
+
+        // Render Sentences Sub-Blocks
+        if ((currentView.type === 'all' || currentView.type === 'sentences') && sentencesArray.length > 0) {
+            const sentenceWrapper = document.createElement('div');
+            sentenceWrapper.className = 'subsection-container';
+            if (currentView.type === 'all') {
+                sentenceWrapper.innerHTML = `<div class="subsection-title">Basic Sentences</div>`;
+            }
+
             const ul = document.createElement('ul');
             ul.className = 'dictionary-list';
 
@@ -148,20 +218,20 @@ function displayDictionary() {
                 ul.appendChild(createCardItem(item));
             });
 
-            subSectionDiv.appendChild(ul);
-            mainDetails.appendChild(subSectionDiv);
+            sentenceWrapper.appendChild(ul);
+            sectionBlock.appendChild(sentenceWrapper);
         }
 
-        containerElement.appendChild(mainDetails);
+        if (sectionBlock.children.length > 0) {
+            containerElement.appendChild(sectionBlock);
+        }
     });
 }
 
-// Extracted Card Element Component Generator to stop repetitive injection architecture
 function createCardItem(item) {
     const globalIndex = dictionary.indexOf(item);
-    const li = document.createElement('li');
-    li.className = 'word-card';
-
+    const itemContainer = document.createElement('div');
+    
     let adminActionsHTML = '';
     if (isAdminSession) {
         adminActionsHTML = `
@@ -173,7 +243,8 @@ function createCardItem(item) {
     }
 
     if (!item.pos || item.pos.length === 0) {
-        li.innerHTML = `
+        itemContainer.className = 'word-card sentence-card-item';
+        itemContainer.innerHTML = `
             <div class="word-content sentence-layout">
                 <div class="sentence-text">${item.word}</div>
                 <div class="sentence-meaning">${item.definition}</div>
@@ -181,24 +252,25 @@ function createCardItem(item) {
             ${adminActionsHTML}
         `;
     } else {
+        itemContainer.className = 'word-card vocab-card-item';
         let tagsHTML = '';
         item.pos.forEach(tag => {
             const labelText = tag.replace('-', ' ');
             tagsHTML += `<span class="pos-tag ${tag}">${labelText}</span>`;
         });
 
-        li.innerHTML = `
+        itemContainer.innerHTML = `
             <div class="word-content">
                 <div class="word-header-row">
                     <span class="word-title">${item.word}</span>
-                    <div class="tags-container">${tagsHTML}</div>
                 </div>
+                <div class="tags-container" style="margin-bottom: 8px;">${tagsHTML}</div>
                 <div class="word-definition">${item.definition}</div>
             </div>
             ${adminActionsHTML}
         `;
     }
-    return li;
+    return itemContainer;
 }
 
 function submitWord() {
@@ -211,9 +283,7 @@ function submitWord() {
     const definition = definitionInput.value.trim();
     
     const selectedPOS = [];
-    document.querySelectorAll('.pos-checkbox:checked').forEach(cb => {
-        selectedPOS.push(cb.value);
-    });
+    document.querySelectorAll('.pos-checkbox:checked').forEach(cb => { selectedPOS.push(cb.value); });
 
     if (word === '' || definition === '') return;
 
@@ -228,6 +298,7 @@ function submitWord() {
     }
 
     localStorage.setItem('valyrianDict', JSON.stringify(dictionary));
+    buildNavigationMenu();
     displayDictionary();
     
     wordInput.value = '';
@@ -263,6 +334,7 @@ function deleteWord(index) {
         }
         dictionary.splice(index, 1); 
         localStorage.setItem('valyrianDict', JSON.stringify(dictionary)); 
+        buildNavigationMenu();
         displayDictionary(); 
     }
 }

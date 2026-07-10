@@ -1,16 +1,25 @@
+/* Base Screen Application Shell Parameters */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #1a1a2e;
     color: #e2e8f0;
-    max-width: 650px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Master Grid content offset layer */
+.app-layout {
+    flex-grow: 1;
+    max-width: 1100px; /* Width widened from 650px to fit 3 columns */
     margin: 0 auto;
     padding: 40px 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     border-bottom: 1px solid #16213e;
     padding-bottom: 20px;
     margin-bottom: 30px;
@@ -24,15 +33,41 @@ h1 {
     letter-spacing: 1.5px;
 }
 
-h3 {
-    margin-top: 0;
-    color: #e5c158;
+h3 { margin-top: 0; color: #e5c158; }
+.hidden { display: none !important; }
+
+/* --- UPDATED HEADER & TOGGLE BUTTON FLEX LAYOUT --- */
+.main-header {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Creates clean proportional padding between menu and title */
+    border-bottom: 1px solid #16213e;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-.hidden {
-    display: none !important;
+#menuToggleBtn {
+    /* Removed position: fixed to allow natural inline flex document flow */
+    background: #e5c158;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    flex-shrink: 0; /* Prevents the button from compressing on small window sizes */
 }
 
+/* Adjust the sidebar top margin slightly since the button is no longer absolutely pinned */
+.sidebar-header {
+    border-bottom: 1px dashed #0f3460;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 10px; /* Reduced from 50px since there is no overlapping floating icon */
+}
+
+/* Ensure the admin panel clears down nicely if toggled open */
 .input-section {
     display: flex;
     flex-direction: column;
@@ -42,230 +77,209 @@ h3 {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     margin-bottom: 35px;
+    margin-top: 10px;
 }
 
-input, textarea, select {
-    padding: 12px;
-    border: 1px solid #0f3460;
-    border-radius: 4px;
-    background: #0f3460;
-    color: white;
-    font-size: 15px;
+/* --- SIDEBAR HAMBURGER SYSTEM ARCHITECTURE --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Kept offscreen until activated */
+    width: 280px;
+    height: 100%;
+    background: #111122;
+    border-right: 1px solid #16213e;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+    z-index: 999;
+    transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    padding: 25px 20px;
+    box-sizing: border-box;
 }
 
-select {
-    cursor: pointer;
+.sidebar.active {
+    left: 0;
 }
 
-.submit-btn {
-    padding: 12px;
-    background-color: #e5c158;
-    color: #1a1a2e;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 5px;
+#sidebarOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    display: none;
 }
 
-.minimal-btn {
-    background: none;
-    border: 1px solid #e5c158;
-    color: #e5c158;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
+#sidebarOverlay.active {
+    display: block;
 }
 
-.minimal-btn:hover {
-    background: #e5c158;
-    color: #1a1a2e;
+.sidebar-header {
+    border-bottom: 1px dashed #0f3460;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    margin-top: 50px; /* Clear out room above the absolute overlay btn */
 }
 
-.dictionary-list {
+.nav-links, .nav-sublinks {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-/* New Collapsible Container Panel Wrapper */
-.unit-collapse {
+.nav-links a {
+    display: block;
+    color: #e5c158;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 4px;
+    background: #16213e;
+    margin-bottom: 15px;
+}
+
+.nav-section-block {
+    margin-bottom: 20px;
+    background: #16213e;
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.nav-section-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #e5c158;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.nav-sublinks li {
+    margin-bottom: 5px;
+}
+
+.nav-sublinks a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+.nav-sublinks a:hover {
+    background: #0f3460;
+    color: #ffd769;
+}
+
+/* --- THE 3-COLUMN VOCABULARY ENGINE --- */
+.vocabulary-three-column-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Generates 3 pristine columns across width layouts */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Fallback grid configuration optimization rules for mobile displays */
+@media(max-width: 850px) {
+    .vocabulary-three-column-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media(max-width: 550px) {
+    .vocabulary-three-column-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Landing Dashboard Header Panel blocks */
+.dashboard-section-panel {
     background: #121225;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
     border-radius: 8px;
-    padding: 5px 15px 15px 15px;
+    padding: 20px;
     border: 1px solid #16213e;
 }
 
-/* Custom Styled Header Tracker replacing older dashed divider formats */
-.unit-header {
+.dashboard-grid-header {
     color: #e5c158;
     font-size: 15px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    padding: 15px 0;
-    cursor: pointer;
-    outline: none;
-    user-select: none;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #0f3460;
+    outline: none; /* Keeps things sleek when clicking to collapse */
 }
 
-/* Subsection Structural Wrapper layout tags */
-.subsection-container {
-    margin-top: 15px;
-    padding-left: 10px;
-    border-left: 2px dashed #0f3460;
-}
-
-.subsection-title {
-    font-size: 13px;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-/* The main card wrapper */
+/* Card layout configurations */
 .word-card {
     background: #16213e;
-    padding: 18px;
-    margin-bottom: 12px;
+    padding: 15px;
     border-radius: 6px;
     border-left: 4px solid #e5c158;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 15px;
-}
-
-/* The container housing the word row and definition */
-.word-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-grow: 1;
-}
-
-/* The exact row containing the word title and its tags */
-.word-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     gap: 12px;
-    margin-bottom: 6px;
+    box-sizing: border-box;
 }
 
-.word-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffd769;
-}
-.word-definition {
-    color: #cbd5e1;
-    line-height: 1.5;
+.vocab-card-item {
+    margin-bottom: 0; /* Clear baseline margins since parent uses grid gaps */
 }
 
-.empty-state {
-    text-align: center;
+.sentence-card-item {
+    margin-bottom: 12px;
+}
+
+.subsection-container {
+    margin-bottom: 20px;
+}
+
+.subsection-title {
+    font-size: 12px;
     color: #94a3b8;
-    font-style: italic;
-    padding: 40px 0;
-}
-
-.delete-btn {
-    background: none;
-    color: #ff6b6b;
-    border: none;
-    cursor: pointer;
-    font-size: 22px;
-    line-height: 1;
-    padding: 0 5px;
-}
-
-.delete-btn:hover {
-    color: #ff8787;
-}
-
-/* Styling layout for the control action panel inside each word card */
-.admin-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.edit-btn {
-    background: none;
-    border: none;
-    color: #ffd769;
-    cursor: pointer;
-    font-size: 14px;
-    transition: color 0.2s;
-}
-
-.edit-btn:hover {
-    color: #fff;
-    text-decoration: underline;
-}
-
-/* Styling layout grid structure for input console checkboxes */
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    background: #0f3460;
-    padding: 12px;
-    border-radius: 4px;
-    border: 1px solid #0f3460;
-}
-
-.checkbox-grid label {
-    font-size: 14px;
-    color: #cbd5e1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* Flexible inline element engine for stacking badges */
-.tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-/* Multi-class badge styles */
-.pos-tag {
-    font-size: 11px;
     text-transform: uppercase;
-    font-weight: bold;
-    padding: 2px 8px;
-    border-radius: 12px;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
 
-/* Dedicated Sentence Layout Framework */
-.word-content.sentence-layout {
-    flex-direction: column;
-    gap: 4px;
-}
+/* Main text settings */
+.word-content { display: flex; flex-direction: column; align-items: flex-start; flex-grow: 1; }
+.word-header-row { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
+.word-title { font-size: 18px; font-weight: bold; color: #ffd769; }
+.word-definition { color: #cbd5e1; line-height: 1.4; font-size: 14px; }
+.dictionary-list { list-style: none; padding: 0; margin: 0; }
+.empty-state { text-align: center; color: #94a3b8; font-style: italic; padding: 40px 0; }
 
-.sentence-text {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd769;
-}
+/* Admin layout configuration blocks */
+.input-section { display: flex; flex-direction: column; gap: 12px; background: #16213e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); margin-bottom: 35px; margin-top: 40px; }
+input, textarea, select { padding: 12px; border: 1px solid #0f3460; border-radius: 4px; background: #0f3460; color: white; font-size: 15px; }
+select { cursor: pointer; }
+.submit-btn { padding: 12px; background-color: #e5c158; color: #1a1a2e; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+.minimal-btn { background: none; border: 1px solid #e5c158; color: #e5c158; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+.minimal-btn:hover { background: #e5c158; color: #1a1a2e; }
+.delete-btn { background: none; color: #ff6b6b; border: none; cursor: pointer; font-size: 22px; line-height: 1; padding: 0 5px; }
+.delete-btn:hover { color: #ff8787; }
+.admin-actions { display: flex; align-items: center; gap: 12px; }
+.edit-btn { background: none; border: none; color: #ffd769; cursor: pointer; font-size: 13px; }
+.edit-btn:hover { color: #fff; text-decoration: underline; }
+.checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; background: #0f3460; padding: 12px; border-radius: 4px; border: 1px solid #0f3460; }
+.checkbox-grid label { font-size: 14px; color: #cbd5e1; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.tags-container { display: flex; flex-wrap: wrap; gap: 4px; }
 
-.sentence-meaning {
-    font-size: 15px;
-    color: #cbd5e1;
-    font-style: italic;
-    padding-left: 2px;
-}
+/* Badge layout configuration tags */
+.pos-tag { font-size: 10px; text-transform: uppercase; font-weight: bold; padding: 1px 6px; border-radius: 10px; letter-spacing: 0.5px; white-space: nowrap; }
+.word-content.sentence-layout { flex-direction: column; gap: 4px; }
+.sentence-text { font-size: 18px; font-weight: bold; color: #ffd769; }
+.sentence-meaning { font-size: 15px; color: #cbd5e1; font-style: italic; padding-left: 2px; }
 
 .pos-tag.noun { background-color: #2a6f97; color: #fff; }
 .pos-tag.verb { background-color: #38b000; color: #fff; }

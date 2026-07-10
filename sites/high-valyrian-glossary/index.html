@@ -7,46 +7,64 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+        <!-- Slide-out Hamburger Sidebar Navigation -->
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Lexicon Menu</h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="navigateTo('all')">✨ Main Dashboard</a></li>
+        </ul>
+        <div id="dynamicNavMenu"></div>
+    </nav>
 
-    <header>
-        <h1>High Valyrian Lexicon</h1>
-    </header>
+    <!-- Screen overlay to dismiss drawer on mobile touch grids -->
+    <div id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <div id="adminPanel" class="input-section hidden">
-        <h3 id="panelTitle">Add / Edit Entry</h3>
-        
-        <!-- Chapter Label Tracking -->
-        <label style="font-size: 13px; color: #94a3b8; margin-bottom: -5px;">Curriculum Grouping:</label>
-        <select id="sectionGroup">
-            <option value="Unit 1, Section 1">Unit 1, Section 1</option>
-            <option value="Unit 1, Section 2">Unit 1, Section 2</option>
-            <option value="Unit 2, Section 1">Unit 2, Section 1</option>
-        </select>
+    <!-- Main Workspace Application Engine Container -->
+    <div class="app-layout">
+        <header class="main-header">
+            <button id="menuToggleBtn" onclick="toggleSidebar()">☰</button>
+            <h1 id="pageMainTitle">High Valyrian Lexicon Dashboard</h1>
+        </header>
 
-        <input type="text" id="wordInput" placeholder="High Valyrian token or phrase (e.g., Ñuha)">
-        
-        <textarea id="definitionInput" oninput="autoDetectPOS()" placeholder="English translation or sentence meaning..." rows="3"></textarea>
-        
-        <div id="posWrapper">
-            <label style="font-size: 13px; color: #94a3b8; margin-bottom: -5px;">Parts of Speech (Auto-detected):</label>
-            <div class="checkbox-grid">
-                <label><input type="checkbox" value="noun" class="pos-checkbox"> Noun</label>
-                <label><input type="checkbox" value="verb" class="pos-checkbox"> Verb</label>
-                <label><input type="checkbox" value="adjective" class="pos-checkbox"> Adjective</label>
-                <label><input type="checkbox" value="adverb" class="pos-checkbox"> Adverb</label>
-                <label><input type="checkbox" value="possessive-adjective" class="pos-checkbox"> Possessive Adjective</label>
-                <label><input type="checkbox" value="possessive-pronoun" class="pos-checkbox"> Possessive Pronoun</label>
+    <!-- The rest of your index.html continues identically below -->
+
+        <div id="adminPanel" class="input-section hidden">
+            <h3 id="panelTitle">Add / Edit Entry</h3>
+            
+            <label style="font-size: 13px; color: #94a3b8; margin-bottom: -5px;">Curriculum Grouping:</label>
+            <select id="sectionGroup">
+                <option value="Unit 1, Section 1">Unit 1, Section 1</option>
+                <option value="Unit 1, Section 2">Unit 1, Section 2</option>
+                <option value="Unit 1, Section 1">Unit 1, Section 3</option>
+            </select>
+
+            <input type="text" id="wordInput" placeholder="High Valyrian token or phrase (e.g., Ñuha)">
+            
+            <textarea id="definitionInput" oninput="autoDetectPOS()" placeholder="English translation or sentence meaning..." rows="3"></textarea>
+            
+            <div id="posWrapper">
+                <label style="font-size: 13px; color: #94a3b8; margin-bottom: -5px;">Parts of Speech (Auto-detected):</label>
+                <div class="checkbox-grid">
+                    <label><input type="checkbox" value="noun" class="pos-checkbox"> Noun</label>
+                    <label><input type="checkbox" value="verb" class="pos-checkbox"> Verb</label>
+                    <label><input type="checkbox" value="adjective" class="pos-checkbox"> Adjective</label>
+                    <label><input type="checkbox" value="adverb" class="pos-checkbox"> Adverb</label>
+                    <label><input type="checkbox" value="possessive-adjective" class="pos-checkbox"> Possessive Adjective</label>
+                    <label><input type="checkbox" value="possessive-pronoun" class="pos-checkbox"> Possessive Pronoun</label>
+                </div>
             </div>
+
+            <button id="submitBtn" class="submit-btn" onclick="submitWord()">Commit to Lexicon</button>
+            <button class="minimal-btn" style="margin-top: 5px;" onclick="exportJSON()">📥 Export words.json File</button>
         </div>
 
-        <button id="submitBtn" class="submit-btn" onclick="submitWord()">Commit to Lexicon</button>
-        <button class="minimal-btn" style="margin-top: 5px;" onclick="exportJSON()">📥 Export words.json File</button>
+        <main>
+            <p>Still Under Construction and working on the dictionary engine, and identifying grammar identifiers and patterns. I am learning as much as you are. Enjoy!!!</p>
+            <div id="dictionaryContainer"></div>
+        </main>
     </div>
-
-    <main>
-        <!-- Swapped ul to a div wrapper to accommodate the new semantic nested details structure -->
-        <div id="dictionaryContainer"></div>
-    </main>
 
     <script src="script.js"></script>
 </body>

@@ -391,5 +391,61 @@
             "adjective"
         ],
         "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Jiōrna, ñuha brōzi Iōnos issa",
+        "definition": "Welcome, my name is Jon.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Rytsas, Daenerys iksan.",
+        "definition": "Hello, I am Daenerys.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Rytsas, Daenerys!",
+        "definition": "Hello, Daenerys!",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Drēji kirine issa?",
+        "definition": "Are you truly happy?",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Issa, kirimvose!",
+        "definition": "Yes, thank you!",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Biarvose!",
+        "definition": "You're welcome.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "drīvose",
+        "definition": "actually, in fact, in truth",
+        "pos": [
+            "adverb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "valar dohaeris",
+        "definition": "all men must serve",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "valar morghūlis",
+        "definition": "all men must die",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 2"
     }
 ]
