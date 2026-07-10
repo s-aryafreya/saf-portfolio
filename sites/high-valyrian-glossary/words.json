@@ -129,7 +129,10 @@
     {
         "word": "kepī",
         "definition": "and fathers, and the fathers, and dads, and the dads (referring to plural)",
-        "pos": []
+        "pos": [
+            "noun"
+        ],
+        "sectionGroup": "Unit 1, Section 1"
     },
     {
         "word": "kirine",
