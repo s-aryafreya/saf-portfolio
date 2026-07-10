@@ -274,5 +274,43 @@
         "pos": [
             "noun"
         ]
+    },
+    {
+        "word": "Ñuha muña kirine issa.",
+        "definition": "My mother is happy.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "Ñuha kepa kirine issa.",
+        "definition": "My father is happy.",
+        "pos": [
+            "possessive-adjective"
+        ],
+        "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "Azantys ābra issa.",
+        "definition": "The knight is a woman.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "Sȳz taoba iksā.",
+        "definition": "You are a good boy.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "Riñi ēdrusi?",
+        "definition": "Are the girls sleeping?",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "Sȳri hontesse vāedis.",
+        "definition": "The good birds are singing.",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 1"
     }
 ]
