@@ -331,5 +331,65 @@
         "definition": "The good birds are singing.",
         "pos": [],
         "sectionGroup": "Unit 1, Section 1"
+    },
+    {
+        "word": "daor",
+        "definition": "no, not, do not",
+        "pos": [
+            "noun",
+            "adjective",
+            "adverb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "issa",
+        "definition": "yes (see unit 1 for additional context)",
+        "pos": [
+            "noun",
+            "adjective"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "rytsas",
+        "definition": "hello, hi, greetings",
+        "pos": [
+            "verb",
+            "adverb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "jiōrna",
+        "definition": "welcome",
+        "pos": [
+            "adjective"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "biarvose",
+        "definition": "you're welcome",
+        "pos": [
+            "possessive-adjective"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "kirimvose",
+        "definition": "thank you",
+        "pos": [
+            "verb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "se",
+        "definition": "and",
+        "pos": [
+            "adjective"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
     }
 ]
