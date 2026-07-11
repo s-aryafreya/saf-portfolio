@@ -450,5 +450,29 @@
         "definition": "all men must die",
         "pos": [],
         "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "arlī",
+        "definition": "again, once again, once more",
+        "pos": [
+            "adverb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "drējī",
+        "definition": "truly, really, very",
+        "pos": [
+            "adverb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "brōzi",
+        "definition": "name, a name, the name",
+        "pos": [
+            "noun"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
     }
 ]
