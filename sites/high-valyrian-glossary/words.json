@@ -170,11 +170,12 @@
         ]
     },
     {
-        "word": "munī",
+        "word": "muñī",
         "definition": "and mothers, and the mothers, and moms, and the moms",
         "pos": [
             "noun"
-        ]
+        ],
+        "sectionGroup": "Unit 1, Section 1"
     },
     {
         "word": "muñi",
@@ -472,6 +473,22 @@
         "definition": "name, a name, the name",
         "pos": [
             "noun"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "kostilus",
+        "definition": "please",
+        "pos": [
+            "verb"
+        ],
+        "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "geros ilas",
+        "definition": "goodbye, farewell, bye",
+        "pos": [
+            "adverb"
         ],
         "sectionGroup": "Unit 1, Section 2"
     }
