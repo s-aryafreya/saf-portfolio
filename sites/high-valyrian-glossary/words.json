@@ -305,14 +305,6 @@
         "sectionGroup": "Unit 1, Section 1"
     },
     {
-        "word": "Ñuha kepa kirine issa.",
-        "definition": "My father is happy.",
-        "pos": [
-            "possessive-adjective"
-        ],
-        "sectionGroup": "Unit 1, Section 1"
-    },
-    {
         "word": "Azantys ābra issa.",
         "definition": "The knight is a woman.",
         "pos": [],
@@ -491,5 +483,73 @@
             "adverb"
         ],
         "sectionGroup": "Unit 1, Section 2"
+    },
+    {
+        "word": "Taoba hontī rȳbas?",
+        "definition": "Does the boy hear a bird",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "Daor, taoba riñe rȳbas.",
+        "definition": "No, the boy hears the girl",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "Vale urnen",
+        "definition": "I see a man",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "Riña taobe rijas",
+        "definition": "The girl is praising a boy",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "Ābri riñī urnesi",
+        "definition": "The women see girls",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "Taobi azantī majaqis",
+        "definition": "The boys are admiring the knights",
+        "pos": [],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "urnes",
+        "definition": "sees, he sees, he does see",
+        "pos": [
+            "verb"
+        ],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "riñe",
+        "definition": "the girl, a girl, girl",
+        "pos": [
+            "noun"
+        ],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "taobe",
+        "definition": "the boy, boy, a boy",
+        "pos": [
+            "noun"
+        ],
+        "sectionGroup": "Unit 1, Section 3"
+    },
+    {
+        "word": "urnesi",
+        "definition": "see, they see, do they see",
+        "pos": [
+            "verb"
+        ],
+        "sectionGroup": "Unit 1, Section 3"
     }
 ]

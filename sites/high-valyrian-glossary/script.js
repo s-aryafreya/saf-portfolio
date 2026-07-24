@@ -32,37 +32,38 @@ async function loadDictionary() {
     try {
         const response = await fetch('words.json');
         if (!response.ok) throw new Error('Could not load words.json');
-        dictionary = await response.json();
+        const fetchDict = await response.json();
+
+        // Ensure every item has a sectionGroup (defaulting to Section 1 if missing)
+        dictionary = fetchDict.map(item => ({
+            ...item,
+            sectionGroup: item.sectionGroup || "Unit 1, Section 1"
+        }));
+
+        // Store active state locally
+        localStorage.setItem('valyrianDict', JSON.stringify(dictionary));
     } catch (error) {
-        dictionary = JSON.parse(localStorage.getItem('valyrianDict')) || [];
+        const localData = localStorage.getItem('valyrianDict');
+        if (localData) {
+            dictionary = JSON.parse(localData);
+        } else {
+            dictionary = [];
+        }
     }
     buildNavigationMenu();
     displayDictionary();
 }
 
+// Updated autoDetectPOS: Sentence vs single word check
 function autoDetectPOS() {
-    const definition = document.getElementById('definitionInput').value.trim().toLowerCase();
+    const input = document.getElementById('wordInput').value.trim();
     const checkboxes = document.querySelectorAll('.pos-checkbox');
 
     checkboxes.forEach(cb => cb.checked = false);
-    if (definition === '') return;
 
-    const words = definition.split(/[\s,./?!\(\)]+/);
-
-    checkboxes.forEach(cb => {
-        const type = cb.value;
-        if (type === 'possessive-adjective' && words.includes('my')) cb.checked = true;
-        else if (type === 'possessive-pronoun' && words.includes('mine')) cb.checked = true;
-        else if (type === 'verb' && (
-            definition.startsWith('to ') || definition.startsWith('is ') || 
-            definition.startsWith('are ') || definition.startsWith('am') || 
-            definition.startsWith('is') || definition.startsWith('are')|| 
-            definition.endsWith('are') || definition.endsWith('ing') 
-        )) cb.checked = true;
-        else if (type === 'noun' && (definition.startsWith('a ') || definition.startsWith('an ') || definition.startsWith('the '))) cb.checked = true;
-        else if (type === 'adjective' && (definition.startsWith('describing') || definition.startsWith('having') || definition.startsWith('is') || definition.endsWith('ful'))) cb.checked = true;
-        else if (type === 'adverb' && (definition.endsWith('ly') || definition.startsWith('in a'))) cb.checked = true;
-    });
+    if (!input || input.includes(' ')) {
+        return;
+    }
 }
 
 // Build Navigation Trees dynamically based on known arrays and captured custom items
@@ -70,7 +71,6 @@ function buildNavigationMenu() {
     const navMenu = document.getElementById('dynamicNavMenu');
     navMenu.innerHTML = '';
 
-    // Find custom user added sections not indexed explicitly
     const trackedGroups = new Set(sectionOrder);
     dictionary.forEach(item => { if(item.sectionGroup) trackedGroups.add(item.sectionGroup); });
     const fullOrder = Array.from(trackedGroups);
@@ -95,7 +95,6 @@ function navigateTo(type, section = null) {
     currentView.type = type;
     currentView.section = section;
     
-    // Update Title Banner Presentation Contextually
     const mainTitle = document.getElementById('pageMainTitle');
     if (type === 'all') {
         mainTitle.innerText = "High Valyrian Lexicon Dashboard";
@@ -104,7 +103,6 @@ function navigateTo(type, section = null) {
         mainTitle.innerText = type === 'vocab' ? `${shortName} (Vocabulary)` : `${shortName} (Sentences)`;
     }
 
-    // Dismiss slider view tracking states natively if processing a mobile window breakpoint
     document.getElementById('sidebar').classList.remove('active');
     document.getElementById('sidebarOverlay').classList.remove('active');
 
@@ -114,7 +112,7 @@ function navigateTo(type, section = null) {
 function displayDictionary() {
     const containerElement = document.getElementById('dictionaryContainer');
     
-    // --- PERSISTENCE LOGIC: Capture current open/close states before wiping the DOM ---
+    // --- PERSISTENCE LOGIC: Capture current open/close states before wiping DOM ---
     const collapseStates = {};
     const existingDetails = containerElement.querySelectorAll('.dashboard-section-panel');
     existingDetails.forEach(details => {
@@ -126,13 +124,13 @@ function displayDictionary() {
 
     containerElement.innerHTML = ''; 
 
-    if (dictionary.length === 0) {
-        containerElement.innerHTML = `<div class="empty-state">The lexicon is currently empty.</div>`;
-        return;
-    }
-
-    // Organize items into structural arrays
+    // Initialize tracking buckets
     const groups = {};
+    sectionOrder.forEach(sec => {
+        groups[sec] = [];
+    });
+
+    // Bucket items accurately
     dictionary.forEach((item) => {
         const section = item.sectionGroup || "Unit 1, Section 1";
         if (!groups[section]) groups[section] = [];
@@ -143,43 +141,41 @@ function displayDictionary() {
     Object.keys(groups).forEach(key => trackedGroups.add(key));
     const fullOrder = Array.from(trackedGroups);
 
-    // --- VIEW ROUTER RENDERING ENGINE ---
+    let itemsRendered = 0;
+
     fullOrder.forEach(sectionTitle => {
-        if (!groups[sectionTitle] || groups[sectionTitle].length === 0) return;
+        const sectionItems = groups[sectionTitle] || [];
 
         // Route matching filters
         if (currentView.type !== 'all' && currentView.section !== sectionTitle) return;
 
-        const wordsArray = groups[sectionTitle].filter(item => item.pos && item.pos.length > 0);
-        const sentencesArray = groups[sectionTitle].filter(item => !item.pos || item.pos.length === 0);
+        // Separate Words vs Sentences based on presence of POS tags
+        const wordsArray = sectionItems.filter(item => Array.isArray(item.pos) && item.pos.length > 0);
+        const sentencesArray = sectionItems.filter(item => !item.pos || item.pos.length === 0);
 
         wordsArray.sort((a, b) => a.word.localeCompare(b.word));
         sentencesArray.sort((a, b) => a.word.localeCompare(b.word));
 
         let sectionBlock;
 
-        // If on the Main Dashboard view, make the whole panel an interactive collapsible block
         if (currentView.type === 'all') {
             sectionBlock = document.createElement('details');
             sectionBlock.className = 'dashboard-section-panel unit-collapse';
-            sectionBlock.setAttribute('data-section', sectionTitle); // Tag for tracking state
+            sectionBlock.setAttribute('data-section', sectionTitle); 
 
-            // Check if user previously collapsed this specific group
             if (collapseStates[sectionTitle] !== undefined) {
                 sectionBlock.open = collapseStates[sectionTitle];
             } else {
-                sectionBlock.open = true; // Default open
+                sectionBlock.open = true; 
             }
 
-            // Create interactive summary header
             const mainSummary = document.createElement('summary');
             mainSummary.className = 'dashboard-grid-header';
-            mainSummary.style.cursor = 'pointer'; // Visual indicator that it collapses
+            mainSummary.style.cursor = 'pointer'; 
             mainSummary.innerText = sectionTitlesMap[sectionTitle] || sectionTitle;
             sectionBlock.appendChild(mainSummary);
 
         } else {
-            // If on a dedicated subpage (Vocab/Sentences), display as a standard open block layout
             sectionBlock = document.createElement('div');
             sectionBlock.className = 'dashboard-section-panel';
         }
@@ -222,10 +218,26 @@ function displayDictionary() {
             sectionBlock.appendChild(sentenceWrapper);
         }
 
-        if (sectionBlock.children.length > 0) {
-            containerElement.appendChild(sectionBlock);
+        // Display empty placeholder state if section has no entries for current view filter
+        const isVocabEmpty = currentView.type === 'vocab' && wordsArray.length === 0;
+        const isSentencesEmpty = currentView.type === 'sentences' && sentencesArray.length === 0;
+        const isAllEmpty = currentView.type === 'all' && wordsArray.length === 0 && sentencesArray.length === 0;
+
+        if (isVocabEmpty || isSentencesEmpty || isAllEmpty) {
+            const emptyNotice = document.createElement('div');
+            emptyNotice.className = 'empty-state';
+            emptyNotice.style.padding = '15px 0';
+            emptyNotice.innerText = 'No entries found in this category.';
+            sectionBlock.appendChild(emptyNotice);
         }
+
+        containerElement.appendChild(sectionBlock);
+        itemsRendered++;
     });
+
+    if (itemsRendered === 0) {
+        containerElement.innerHTML = `<div class="empty-state">The lexicon is currently empty.</div>`;
+    }
 }
 
 function createCardItem(item) {
@@ -340,14 +352,22 @@ function deleteWord(index) {
 }
 
 function exportJSON() {
-    const dataStr = JSON.stringify(dictionary, null, 4);
-    const blob = new Blob([dataStr], {type: "application/json"});
+    const sortedDict = [...dictionary].sort((a, b) => {
+        const orderA = sectionOrder.indexOf(a.sectionGroup || "Unit 1, Section 1");
+        const orderB = sectionOrder.indexOf(b.sectionGroup || "Unit 1, Section 1");
+        return (orderA === -1 ? 99 : orderA) - (orderB === -1 ? 99 : orderB);
+    });
+
+    const dataStr = JSON.stringify(sortedDict, null, 4);
+    const blob = new Blob([dataStr], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     
     const link = document.createElement('a');
     link.href = url;
     link.download = "words.json";
     link.click();
+    
+    URL.revokeObjectURL(url);
 }
 
 window.addEventListener('keydown', (e) => {
